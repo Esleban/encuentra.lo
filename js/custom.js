@@ -2,7 +2,7 @@ jQuery(document).ready(function( $ ) {
 
   // Preloader
   $(window).on('load', function() {
-    $('#preloader').delay(100).fadeOut('slow',function(){$(this).remove();});
+    $('#preloader').delay(150).fadeOut('slow',function(){$(this).remove();});
   });
 
   // Hero rotating texts
@@ -22,45 +22,9 @@ jQuery(document).ready(function( $ ) {
   });
 
   //Login y registro
-
-
-
-
   
   // Mobile Navigation
-  if( $('#nav-menu-container').length ) {
-      var $mobile_nav = $('#nav-menu-container').clone().prop({ id: 'mobile-nav'});
-      $mobile_nav.find('> ul').attr({ 'class' : '', 'id' : '' });
-      $('body').append( $mobile_nav );
-      $('body').prepend( '<button type="button" id="mobile-nav-toggle"><i class="fa fa-bars"></i></button>' );
-      $('body').append( '<div id="mobile-body-overly"></div>' );
-      $('#mobile-nav').find('.menu-has-children').prepend('<i class="fa fa-chevron-down"></i>');
-      
-      $(document).on('click', '.menu-has-children i', function(e){
-          $(this).next().toggleClass('menu-item-active');
-          $(this).nextAll('ul').eq(0).slideToggle();
-          $(this).toggleClass("fa-chevron-up fa-chevron-down");
-      });
-      
-      $(document).on('click', '#mobile-nav-toggle', function(e){
-          $('body').toggleClass('mobile-nav-active');
-          $('#mobile-nav-toggle i').toggleClass('fa-times fa-bars');
-          $('#mobile-body-overly').toggle();
-      });
-      
-      $(document).click(function (e) {
-          var container = $("#mobile-nav, #mobile-nav-toggle");
-          if (!container.is(e.target) && container.has(e.target).length === 0) {
-             if ( $('body').hasClass('mobile-nav-active') ) {
-                  $('body').removeClass('mobile-nav-active');
-                  $('#mobile-nav-toggle i').toggleClass('fa-times fa-bars');
-                  $('#mobile-body-overly').fadeOut();
-              }
-          }
-      });
-  } else if ( $("#mobile-nav, #mobile-nav-toggle").length ) {
-      $("#mobile-nav, #mobile-nav-toggle").hide();
-  }
+  
   
   // Stick the header at top on scroll
   $("#header").sticky({topSpacing:0, zIndex: '50'});
@@ -117,13 +81,7 @@ jQuery(document).ready(function( $ ) {
 
 
 /* #####################################################################
-   #
-   #   Project       : Modal Login with jQuery Effects
-   #   Author        : Rodrigo Amarante (rodrigockamarante)
-   #   Version       : 1.0
-   #   Created       : 07/29/2015
-   #   Last Change   : 08/04/2015
-   #
+
    ##################################################################### */
    
 $(function() {
@@ -136,43 +94,7 @@ $(function() {
     var $msgAnimateTime = 150;
     var $msgShowTime = 2000;
 
-    $("form").submit(function () {
-        switch(this.id) {
-            case "login-form":
-                var $lg_username=$('#login_username').val();
-                var $lg_password=$('#login_password').val();
-                if ($lg_username == "ERROR") {
-                    msgChange($('#div-login-msg'), $('#icon-login-msg'), $('#text-login-msg'), "error", "glyphicon-remove", "Login error");
-                } else {
-                    msgChange($('#div-login-msg'), $('#icon-login-msg'), $('#text-login-msg'), "success", "glyphicon-ok", "Login OK");
-                }
-                return false;
-                break;
-            case "lost-form":
-                var $ls_email=$('#lost_email').val();
-                if ($ls_email == "ERROR") {
-                    msgChange($('#div-lost-msg'), $('#icon-lost-msg'), $('#text-lost-msg'), "error", "glyphicon-remove", "Send error");
-                } else {
-                    msgChange($('#div-lost-msg'), $('#icon-lost-msg'), $('#text-lost-msg'), "success", "glyphicon-ok", "Send OK");
-                }
-                return false;
-                break;
-            case "register-form":
-                var $rg_username=$('#register_username').val();
-                var $rg_email=$('#register_email').val();
-                var $rg_password=$('#register_password').val();
-                if ($rg_username == "ERROR") {
-                    msgChange($('#div-register-msg'), $('#icon-register-msg'), $('#text-register-msg'), "error", "glyphicon-remove", "Register error");
-                } else {
-                    msgChange($('#div-register-msg'), $('#icon-register-msg'), $('#text-register-msg'), "success", "glyphicon-ok", "Register OK");
-                }
-                return false;
-                break;
-            default:
-                return false;
-        }
-        return false;
-    });
+  
     
     $('#login_register_btn').click( function () { modalAnimate($formLogin, $formRegister) });
     $('#register_login_btn').click( function () { modalAnimate($formRegister, $formLogin); });
@@ -192,23 +114,5 @@ $(function() {
         });
     }
     
-    function msgFade ($msgId, $msgText) {
-        $msgId.fadeOut($msgAnimateTime, function() {
-            $(this).text($msgText).fadeIn($msgAnimateTime);
-        });
-    }
-    
-    function msgChange($divTag, $iconTag, $textTag, $divClass, $iconClass, $msgText) {
-        var $msgOld = $divTag.text();
-        msgFade($textTag, $msgText);
-        $divTag.addClass($divClass);
-        $iconTag.removeClass("glyphicon-chevron-right");
-        $iconTag.addClass($iconClass + " " + $divClass);
-        setTimeout(function() {
-            msgFade($textTag, $msgOld);
-            $divTag.removeClass($divClass);
-            $iconTag.addClass("glyphicon-chevron-right");
-            $iconTag.removeClass($iconClass + " " + $divClass);
-      }, $msgShowTime);
-    }
+   
 });
