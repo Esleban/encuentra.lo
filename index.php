@@ -41,12 +41,12 @@
       
       $password = hash('sha256', $pass); // password hashing using SHA256
     
-      $res=mysql_query("SELECT userId, userName, userPass FROM users WHERE userEmail='$email'");
+      $res=mysql_query("SELECT idCandidato, nombre, passCand FROM candidato WHERE correo='$email'");
       $row=mysql_fetch_array($res);
       $count = mysql_num_rows($res); // if uname/pass correct it returns must be 1 row
       
-      if( $count == 1 && $row['userPass']==$password ) {
-        $_SESSION['user'] = $row['userId'];
+      if( $count == 1 && $row['passCand']==$password ) {
+        $_SESSION['user'] = $row['idCandidato'];
         header("Location: home.php");
       } else {
         $errMSG = "Datos incorrectos, Intenta otra vez...";
@@ -84,36 +84,36 @@
     // basic name validation
     if (empty($name)) {
       $error = true;
-      $nameError = "Please enter your full name.";
+      $nameError = "Por favor ingresa tu nombre completo.";
     } else if (strlen($name) < 3) {
       $error = true;
-      $nameError = "Name must have atleat 3 characters.";
+      $nameError = "El nombre debe tener al menos 3 caracteres.";
     } else if (!preg_match("/^[a-zA-Z ]+$/",$name)) {
       $error = true;
-      $nameError = "Name must contain alphabets and space.";
+      $nameError = "El nombre debe contener alfabetos y espacio.";
     }
     
     //basic email validation
     if ( !filter_var($email,FILTER_VALIDATE_EMAIL) ) {
       $error = true;
-      $emailError = "Please enter valid email address.";
+      $emailError = "Por favor ingrese una dirección de correo electrónico válida.";
     } else {
       // check email exist or not
-      $query = "SELECT userEmail FROM users WHERE userEmail='$email'";
+      $query = "SELECT correo FROM candidato WHERE correo='$email'";
       $result = mysql_query($query);
       $count = mysql_num_rows($result);
       if($count!=0){
         $error = true;
-        $emailError = "Provided Email is already in use.";
+        $emailError = "El correo electrónico ya está en uso.";
       }
     }
     // password validation
     if (empty($pass)){
       $error = true;
-      $passError = "Please enter password.";
+      $passError = "Por favor, ingrese contraseña.";
     } else if(strlen($pass) < 6) {
       $error = true;
-      $passError = "Password must have atleast 6 characters.";
+      $passError = "La contraseña debe tener al menos 6 caracteres.";
     }
     
     // password encrypt using SHA256();
@@ -122,18 +122,18 @@
     // if there's no error, continue to signup
     if( !$error ) {
       
-      $query = "INSERT INTO users(userName,userEmail,userPass) VALUES('$name','$email','$password')";
+      $query = "INSERT INTO candidato(nombre,correo,passCand) VALUES('$name','$email','$password')";
       $res = mysql_query($query);
         
       if ($res) {
         $errTyp = "success";
-        $errMSG = "Successfully registered, you may login now";
+        $errMSG = "Registrado correctamente, puede iniciar sesión ahora";
         unset($name);
         unset($email);
         unset($pass);
       } else {
         $errTyp = "danger";
-        $errMSG = "Something went wrong, try again later..."; 
+        $errMSG = "Algo salió mal, vuelve a intentarlo más tarde ..."; 
       } 
         
     }
@@ -179,8 +179,7 @@
       
     <nav id="nav-menu-container">
       <ul class="nav-menu">
-     
-        <li><a href="#" role="button" data-toggle="modal" data-target="#login-empresa">Soy Empresa</a></li>
+        <li ><a href="#" role="button" data-toggle="modal" data-target="#login-empresa">Soy Empresa</a></li>
         <li><a href="#" role="button" data-toggle="modal" data-target="#register-modal">Registrarme</a></li>
         <li><a href="#" role="button" data-toggle="modal" data-target="#login-modal" class="btn-get-started">Iniciar Sesión</a></li>
         
@@ -295,8 +294,8 @@
                 <!-- End # DIV Form -->
 
 
-<div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-      <div class="modal-dialog">
+<div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;" >
+      <div class="modal-dialog" style=" width: 350px;" >
          <div class="modal-content">
            <div class="modal-header" align="center">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -305,14 +304,14 @@
               <img  id="img_logo" src="img/logo.png">
            </div>
                 <!-- Begin # DIV Form -->
-                <div id="div-forms">
+                <div id="div-forms" >
                         <!-- Begin | Register Form -->
                         <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" autocomplete="off">
                         <?php
       if ( isset($errMSG) ) {
         
         ?>
-        <div class="form-group">
+        <div class="form-group" >
               <div class="alert alert-<?php echo ($errTyp=="success") ? "success" : $errTyp; ?>">
         <span class="glyphicon glyphicon-info-sign"></span> <?php echo $errMSG; ?>
                 </div>
@@ -320,19 +319,19 @@
                 <?php
       }
       ?>
-                          <div class="modal-body">
+                          <div class="modal-body" >
                                 Nombre:
-                                <input type="text" name="name" class="form-control" placeholder="Ingresa tu nombre" maxlength="50" value="<?php echo $name ?>" required/>
+                                <input type="text" name="name" class="form-control" placeholder="Ingresa tu nombre" maxlength="50" value="<?php echo $name ?>" required />
                                 <span class="text-danger"><?php echo $nameError; ?></span>
                                 Email
                                <input type="email" name="email" class="form-control" placeholder="Ingresa tu Email" maxlength="40" value="<?php echo $email ?>" required/>
                                 <span class="text-danger"><?php echo $emailError; ?></span>
                                 Telefono fijo:
-                                <input id="register_telFijo" class="form-control" type="text"  >
+                                <input  type="text" name="telfijo" class="form-control" id="register_telFijo" placeholder="(222) 22 2 22 22"  maxlength="15" required>
                                 Telefono Movil
-                                <input id="register_telMovil" class="form-control" type="text"  >
+                                <input type="text" name="telMovil" class="form-control" id="register_telMovil"  class="form-control" placeholder="(222) 22 2 22 22" maxlength="15"  required>
                                 Usuario:
-                                <input id="register_user" class="form-control" type="text">
+                                <input id="register_user" name="usuario" class="form-control" type="text">
                                 Contraseña:
                                 <input type="password" name="pass" class="form-control" placeholder="Ingresa tu contraseña" maxlength="15" required />
                                 <span class="text-danger"><?php echo $passError; ?></span>

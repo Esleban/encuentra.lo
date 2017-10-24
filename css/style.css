@@ -1,6 +1,6 @@
 
 /*--------------------------------------------------------------
-# General
+# Gene-----ral
 --------------------------------------------------------------*/
 body {
   background: #fff;
@@ -526,7 +526,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 /* enviar curriculum
 --------------------------------*/
 #subscribe {
-  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(../img/team.jpg) fixed center center;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(../img/teama.jpg) fixed center center;
   background-size: cover;
   padding: 80px 0;
 }
@@ -592,15 +592,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 
-/* #####################################################################
-   #
-   #   Project       : Modal Login with jQuery Effects
-   #   Author        : Rodrigo Amarante (rodrigockamarante)
-   #   Version       : 1.0
-   #   Created       : 07/28/2015
-   #   Last Change   : 08/02/2015
-   #
-   ##################################################################### */
+/* ##################################################################### */
    
 
 
@@ -611,6 +603,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 #login-modal input[type=text], input[type=password] {
 	margin-top: 10px;
 }
+
 
 #div-login-msg,
 #div-lost-msg,
