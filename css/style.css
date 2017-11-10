@@ -597,7 +597,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 
 #login-modal .modal-dialog {
-    width: 350px;
+    width: 450px;
 }
 
 #login-modal input[type=text], input[type=password] {
@@ -728,3 +728,18 @@ body.mobile-nav-active #mobile-nav-toggle {
 .form-control {
   border-radius: 0px;
 }
+
+table th{
+  text-align: center;
+
+
+}
+table td{
+  
+  vertical-align:middle;
+}
+
+
+
+
+
